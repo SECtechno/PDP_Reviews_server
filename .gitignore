@@ -1,0 +1,10 @@
+node_modules
+.DS_Store
+**/.DS_Store
+rawdata
+bundle.js
+config.js
+**/config.js
+package-lock.json
+coverage
+
