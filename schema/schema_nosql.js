@@ -37,7 +37,7 @@ let reviewMetaSchema = mongoose.Schema({
     'true': Number
   },
   Characteristics: {
-   characteristics: {
+   name: {
      id: Number,
      value: String
     },
