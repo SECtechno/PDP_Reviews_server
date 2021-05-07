@@ -7,7 +7,11 @@ const filename = ('./rawdata/test_characteristics.csv');
 // convert CSV into JSON
 fs.createReadStream(filename)
   .pipe(csv())
-  .on('data', (data) => results.push(data))
+  .on('data', (data) => {
+    data.name = 'sam';
+    results.push(data);
+  })
+
   .on('end', () => {
     console.log(results);
     // [
@@ -22,3 +26,17 @@ fs.createReadStream(filename)
     //   { id: '9', product_id: '3', name: 'Quality' }
     // ]
   });
+
+
+  /*
+  let parsedEpoch = parseInt(data.date)
+    if (parsedEpoch) {
+      let newDate = new Date(parsedEpoch)
+      data[‘date’] = newDate.toString();
+    } else {
+      let tempDate = new Date(data[‘date’])
+      let epochDate = tempDate.getTime();
+      let newParsedDate = new Date(epochDate);
+      data[‘date’] = newParsedDate.toString();
+    }
+  */
