@@ -9,6 +9,7 @@ let csvData = [];
 let csvStream = fastcsv
   .parse()
   .on("data", function(data) {
+    console.log(data.name);
     csvData.push(data);
   })
   .on("end", function() {
