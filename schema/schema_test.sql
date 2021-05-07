@@ -1,8 +1,8 @@
-DROP DATABASE IF EXISTS reviews_ts;
+DROP DATABASE IF EXISTS reviews_st;
 
-CREATE DATABASE reviews_ts;
+CREATE DATABASE reviews_st;
 
-USE reviews_ts;
+USE reviews_st;
 
 
 DROP TABLE IF EXISTS products;
@@ -24,15 +24,15 @@ DROP TABLE IF EXISTS reviews;
 CREATE TABLE reviews (
   id int NOT NULL AUTO_INCREMENT,
   product_id int(10) NOT NULL,
-  rating int NOT NULL,
-  date timestamp NOT NULL,
-  summary varchar(60) NOT NULL,
-  body varchar(200) NOT NULL,
+  rating int(20) NOT NULL,
+  date varchar(60) NOT NULL,
+  summary varchar(200) NOT NULL,
+  body varchar(500) NOT NULL,
   recommend tinyint NOT NULL,
   reported tinyint NOT NULL,
-  reviewer_name varchar(20) NOT NULL,
-  reviewer_email varchar(20) NOT NULL,
-  response varchar(20) NOT NULL,
+  reviewer_name varchar(100) NOT NULL,
+  reviewer_email varchar(100) NOT NULL,
+  response varchar(100) NOT NULL,
   helpfulness int NOT NULL,
   PRIMARY KEY (ID)
 );
@@ -46,9 +46,9 @@ CREATE TABLE characteristics (
   PRIMARY KEY (ID)
 );
 
-DROP TABLE IF EXISTS characteristics_reviews;
+DROP TABLE IF EXISTS characteristic_reviews;
 
-CREATE TABLE characteristics_reviews (
+CREATE TABLE characteristic_reviews (
   id int NOT NULL AUTO_INCREMENT,
   characteristic_id int NOT NULL,
   review_id int NOT NULL,
@@ -68,12 +68,12 @@ CREATE TABLE reviews_photos (
 -- ALTER TABLE reviews ADD FOREIGN KEY (product_id) REFERENCES products (id);
 -- ALTER TABLE reviews_photos ADD FOREIGN KEY (review_id) REFERENCES reviews (id);
 -- ALTER TABLE characteristics ADD FOREIGN KEY (product_id) REFERENCES products (id);
--- ALTER TABLE characteristics_reviews ADD FOREIGN KEY (characteristic_id) REFERENCES characteristics (id);
--- ALTER TABLE characteristics_reviews ADD FOREIGN KEY (review_id) REFERENCES reviews (id);
+-- ALTER TABLE characteristic_reviews ADD FOREIGN KEY (characteristic_id) REFERENCES characteristics (id);
+-- ALTER TABLE characteristic_reviews ADD FOREIGN KEY (review_id) REFERENCES reviews (id);
 
 
 /*
-LOAD DATA LOCAL INFILE "./rawdata/test_reviews.csv" INTO TABLE reviews
+LOAD DATA LOCAL INFILE "./rawdata/reviews_photos.csv" INTO TABLE reviews_photos
 FIELDS TERMINATED BY ','
 IGNORE 1 ROWS;
 

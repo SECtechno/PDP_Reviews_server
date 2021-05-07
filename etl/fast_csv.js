@@ -1,6 +1,6 @@
-const fs = require('fs')
-var mysql      = require('mysql');
-const fastcsv = require('fast-csv')
+const fs = require('fs');
+var mysql = require('mysql');
+const fastcsv = require('fast-csv');
 
 const filename = ('./rawdata/test_reviews.csv');
 
@@ -18,6 +18,7 @@ let csvStream = fastcsv
 
     // console.log('data: ', csvData);
 
+  /* .on('end', function() {...}) */
   // create a new connection to the database
   var connection = mysql.createConnection({
     host     : 'localhost',
@@ -33,17 +34,18 @@ let csvStream = fastcsv
     } else {
       let query =
         "INSERT INTO reviews (id,product_id,rating,date,summary,body,recommend,reported,reviewer_name,reviewer_email,response,helpfulness) VALUES ?";
-      connection.query(query, [csvData], (error, response) => {
-        console.log(error || response);
-      });
+        console.log([csvData]);
+      // connection.query(query, [csvData], (error, response) => {
+      //   console.log(error || response);
+      // });
     }
   });
 });
 
-// stream.pipe(csvStream);
-(async function() {
-  const t1 = new Date();
-  stream.pipe(csvStream);
-  const t2 = new Date();
-  console.log(`Run time: ${(t2-t1) / 1000} seconds.`)
-})();
+stream.pipe(csvStream);
+// (async function() {
+//   const t1 = new Date();
+//   stream.pipe(csvStream);
+//   const t2 = new Date();
+//   console.log(`Run time: ${(t2-t1) / 1000} seconds.`)
+// })();

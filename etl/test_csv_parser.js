@@ -1,9 +1,12 @@
-const csv = require('csv-parser')
-var mysql      = require('mysql');
-const fs = require('fs')
+const csv = require('csv-parser');
+var mysql = require('mysql');
+const fs = require('fs');
+const writeToDB = require('../helper/writeToDatabase.js');
 const results = [];
 
+
 const filename = ('./rawdata/test_reviews.csv');
+//test_
 
 /*
 test_characteristics.csv
@@ -38,28 +41,33 @@ fs.createReadStream(filename)
     let parsedEpoch = parseInt(data.date)
     if (parsedEpoch) {
       let newDate = new Date(parsedEpoch)
-      data['date'] = newDate.toString();
+      data['date'] = newDate.toString().split(' ').slice(3,5).join(' ');
     } else {
       let tempDate = new Date(data['date'])
       let epochDate = tempDate.getTime();
       let newParsedDate = new Date(epochDate);
-      data['date'] = newParsedDate.toString();
+      data['date'] = newParsedDate.toString().split(' ').slice(3,5).join(' ');
     }
 
     results.push(data);
   })
 
+  // write to database
   .on('end', () => {
     results.shift();
-    // console.log(results);
-    parsedData = JSON.stringify(results);
 
-     // create a new connection to the database
+    parsedData = results.map((item) => (
+      Object.values(item)
+    ))
+
+    console.log(parsedData);
+
+    // create a new connection to the database
     var connection = mysql.createConnection({
       host     : 'localhost',
       user     : 'root',
       password : 'password',
-      database : 'reviews_db'
+      database : 'reviews_ts'
     });
 
     // open the connection
@@ -69,6 +77,7 @@ fs.createReadStream(filename)
       } else {
         let query =
           "INSERT INTO reviews (id,product_id,rating,date,summary,body,recommend,reported,reviewer_name,reviewer_email,response,helpfulness) VALUES ?";
+
         connection.query(query, [parsedData], (error, response) => {
           console.log(error || response);
         });
@@ -76,4 +85,3 @@ fs.createReadStream(filename)
   });
 
 });
-
