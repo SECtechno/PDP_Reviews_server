@@ -1,0 +1,16 @@
+SQL STATEMENT:
+
+DATA Manipulation:
+SELECT STATEMENT:
+SELECT * FROM groceries;
+
+INSERT STATEMENT:
+"INSERT INTO category (id, name, description, created_at) VALUES ?"
+
+LOAD DATA STATEMENT:
+LOAD DATA LOCAL INFILE "./rawdata/test_reviews.csv" INTO TABLE reviews
+FIELDS TERMINATED BY ','
+IGNORE 1 ROWS;
+
+
+

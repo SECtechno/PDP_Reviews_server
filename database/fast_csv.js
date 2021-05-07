@@ -9,11 +9,14 @@ let csvData = [];
 let csvStream = fastcsv
   .parse()
   .on("data", function(data) {
-    console.log(data.name);
+    // each row as an array
     csvData.push(data);
   })
   .on("end", function() {
+    // ignore the 1st row
     csvData.shift();
+
+    // console.log('data: ', csvData);
 
   // create a new connection to the database
   var connection = mysql.createConnection({
