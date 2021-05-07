@@ -1,4 +1,5 @@
 const csv = require('csv-parser')
+var mysql      = require('mysql');
 const fs = require('fs')
 const results = [];
 
@@ -49,29 +50,30 @@ fs.createReadStream(filename)
   })
 
   .on('end', () => {
-    console.log(results);
-    // [
-    //   { id: '1', product_id: '1', name: 'Fit' },
-    //   { id: '2', product_id: '1', name: 'Length' },
-    //   { id: '3', product_id: '1', name: 'Comfort' },
-    //   { id: '4', product_id: '1', name: 'Quality' },
-    //   { id: '5', product_id: '2', name: 'Quality' },
-    //   { id: '6', product_id: '3', name: 'Fit' },
-    //   { id: '7', product_id: '3', name: 'Length' },
-    //   { id: '8', product_id: '3', name: 'Comfort' },
-    //   { id: '9', product_id: '3', name: 'Quality' }
-    // ]
+    results.shift();
+    // console.log(results);
+    parsedData = JSON.stringify(results);
+
+     // create a new connection to the database
+    var connection = mysql.createConnection({
+      host     : 'localhost',
+      user     : 'root',
+      password : 'password',
+      database : 'reviews_db'
+    });
+
+    // open the connection
+    connection.connect(error => {
+      if (error) {
+        console.error(error);
+      } else {
+        let query =
+          "INSERT INTO reviews (id,product_id,rating,date,summary,body,recommend,reported,reviewer_name,reviewer_email,response,helpfulness) VALUES ?";
+        connection.query(query, [parsedData], (error, response) => {
+          console.log(error || response);
+        });
+      }
   });
 
-  /*
-  let parsedEpoch = parseInt(data.date)
-    if (parsedEpoch) {
-      let newDate = new Date(parsedEpoch)
-      data[‘date’] = newDate.toString();
-    } else {
-      let tempDate = new Date(data[‘date’])
-      let epochDate = tempDate.getTime();
-      let newParsedDate = new Date(epochDate);
-      data[‘date’] = newParsedDate.toString();
-    }
-  */
+});
+

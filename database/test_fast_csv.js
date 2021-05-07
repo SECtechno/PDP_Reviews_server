@@ -2,7 +2,7 @@ const fs = require('fs')
 var mysql      = require('mysql');
 const fastcsv = require('fast-csv')
 
-const filename = ('./rawdata/test_reviews.csv');
+const filename = ('./rawdata/test_category.csv');
 
 let stream = fs.createReadStream(filename);
 let csvData = [];
@@ -23,7 +23,7 @@ let csvStream = fastcsv
     host     : 'localhost',
     user     : 'root',
     password : 'password',
-    database : 'reviews_db'
+    database : 'testdb'
   });
 
   // open the connection
@@ -32,7 +32,7 @@ let csvStream = fastcsv
       console.error(error);
     } else {
       let query =
-        "INSERT INTO reviews (id,product_id,rating,date,summary,body,recommend,reported,reviewer_name,reviewer_email,response,helpfulness) VALUES ?";
+        "INSERT INTO category (id, name, description, created_at) VALUES ?";
       connection.query(query, [csvData], (error, response) => {
         console.log(error || response);
       });
@@ -40,10 +40,4 @@ let csvStream = fastcsv
   });
 });
 
-// stream.pipe(csvStream);
-(async function() {
-  const t1 = new Date();
-  stream.pipe(csvStream);
-  const t2 = new Date();
-  console.log(`Run time: ${(t2-t1) / 1000} seconds.`)
-})();
+stream.pipe(csvStream);
