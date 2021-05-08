@@ -69,8 +69,8 @@ CREATE TABLE reviews_photos (
 -- ALTER TABLE reviews ADD FOREIGN KEY (product_id) REFERENCES products (id);
 -- ALTER TABLE reviews_photos ADD FOREIGN KEY (review_id) REFERENCES reviews (id);
 -- ALTER TABLE characteristics ADD FOREIGN KEY (product_id) REFERENCES products (id);
--- ALTER TABLE characteristics_reviews ADD FOREIGN KEY (characteristic_id) REFERENCES characteristics (id);
--- ALTER TABLE characteristics_reviews ADD FOREIGN KEY (review_id) REFERENCES reviews (id);
+-- ALTER TABLE characteristic_reviews ADD FOREIGN KEY (characteristic_id) REFERENCES characteristics(id);
+-- ALTER TABLE characteristic_reviews ADD FOREIGN KEY (review_id) REFERENCES reviews (id);
 
 /*
 LOAD DATA LOCAL INFILE "./rawdata/reviews.csv" INTO TABLE reviews
