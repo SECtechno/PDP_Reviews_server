@@ -1,51 +1,85 @@
+
 const fs = require('fs');
-var mysql = require('mysql');
 const fastcsv = require('fast-csv');
+var db = require('../database');
 
-const filename = ('./rawdata/test_reviews.csv');
+const filename = ('./rawdata/reviews.csv');
 
-let stream = fs.createReadStream(filename);
-let csvData = [];
-let csvStream = fastcsv
-  .parse()
-  .on("data", function(data) {
-    // each row as an array
-    csvData.push(data);
-  })
-  .on("end", function() {
-    // ignore the 1st row
-    csvData.shift();
+const writeFile = function(record) {
 
-    // console.log('data: ', csvData);
+  const q = `INSERT INTO reviews SET ?`;
+    // csvStream.pause();
+    db.query(q, record, (err) => {
+      if (err) {
+        throw err
+      }
+      counter++;
+      if (counter % 500 === 0) {
+        console.log(counter);
+      }
+    })
+}
 
-  /* .on('end', function() {...}) */
-  // create a new connection to the database
-  var connection = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'root',
-    password : 'password',
-    database : 'reviews_db'
-  });
+const parseDate = date => {
+  let dateAsInteger = parseInt(date);
+  formattedDate = isNaN(dateAsInteger) ? new Date(date) : new Date(dateAsInteger)
+  return formattedDate;
+}
 
-  // open the connection
-  connection.connect(error => {
-    if (error) {
-      console.error(error);
-    } else {
-      let query =
-        "INSERT INTO reviews (id,product_id,rating,date,summary,body,recommend,reported,reviewer_name,reviewer_email,response,helpfulness) VALUES ?";
-        console.log([csvData]);
-      // connection.query(query, [csvData], (error, response) => {
-      //   console.log(error || response);
-      // });
+const parseBoolean = bool => {
+  return bool.toLowerCase() === 'true';
+}
+
+const parseRating = rating => {
+
+  if (rating > 5) {
+    return 5;
+  } else if (typeof rating === 'string') {
+    return 0;
+  } else {
+    return rating;
+  }
+}
+
+const parseEmail = function(email) {
+  var lastFour = email.slice(-4);
+  if (lastFour !== '.com') {
+    return email = null;
+  }
+}
+
+var linesPerChunk = 500;
+let results = [];
+let counter = 0;
+const maxConcurrent = 10;
+const numConcurrent = 0;
+let isPaused = false;
+
+console.time('readFile');
+let csvStream = fastcsv.parseFile(filename, {
+  headers: true,
+}).transform(record => ({
+  ...record,
+  date: parseDate(record.date),
+  recommend: parseBoolean(record.recommend),
+  reported: parseBoolean(record.reported),
+  rating: parseRating(record.rating),
+  helpfulness: parseRating(record.helpfulness),
+  reviewer_email: parseEmail(record.reviewer_email)
+}))
+  .on("data", function(record) {
+    results.push(record);
+    if (results.length >= linesPerChunk) {
+      results.map((item) => (
+        writeFile(item)
+      ))
+      results = [];
     }
-  });
-});
-
-stream.pipe(csvStream);
-// (async function() {
-//   const t1 = new Date();
-//   stream.pipe(csvStream);
-//   const t2 = new Date();
-//   console.log(`Run time: ${(t2-t1) / 1000} seconds.`)
-// })();
+  })
+  .on("end", function(count) {
+    console.log(`${count} rows successfully read.`);
+    console.timeEnd('readFile');
+    db.end();
+}).on("error", err => {
+  console.log(err);
+})
