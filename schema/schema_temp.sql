@@ -66,7 +66,7 @@ CREATE TABLE reviews_photos (
 );
 
 /*
-LOAD DATA LOCAL INFILE "./rawdata/reviews.csv" INTO TABLE reviews
+LOAD DATA LOCAL INFILE "./rawdata/characteristic_reviews_4.csv" INTO TABLE characteristic_reviews
 FIELDS TERMINATED BY ','
 IGNORE 1 ROWS;
 

@@ -5,14 +5,14 @@ const writeToDB = require('../helper/writeToDatabase.js');
 const dv_reviews = require('../helper/dv_reviews.js');
 const dv_characteristics = require('../helper/dv_characteristics.js');
 
-const filename = ('./rawdata/characteristic_reviews.csv');
+const filename = ('./rawdata/characteristic_reviews_1.csv');
 let results = [];
 
 /*
 reviews: 5,774,952 -  5774952 (5688362)
 reviews_photos: 2,735,823 - 2742540 (2701623)
 characteristics: 3,347,679 - 3347679 (3297700)
-characteristics_reviews:19,327,575
+characteristic_reviews:19,327,575 - (19327572)
 
 (test_reviews, reviews_photos, characteristics, characteristics_reviews.csv)
 
@@ -20,7 +20,7 @@ characteristics_reviews:19,327,575
 */
 
 let counter = 0;
-var linesPerChunk = 50000;
+var linesPerChunk = 50;
 const t1 = new Date();
 
 // convert CSV into JSON object
