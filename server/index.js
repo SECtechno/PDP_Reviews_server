@@ -1,15 +1,17 @@
 const express = require('express')
 const app = express()
+
 const port = 8000
-const db = require('../database/index.js');
+const db = require('../database');
+const controller = require('./controllers');
+
+app.use(express.urlencoded({extended: true}));
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
-app.get('/reviws', (req, res) => {
-  // do something
-})
+app.get('/reviws', controller.getHandler)
 
 app.get('/reviws/meta', (req, res) => {
   // do something
