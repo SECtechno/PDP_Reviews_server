@@ -2,22 +2,32 @@ const model = require('../models');
 
 module.exports = {
 
-  getHandler(req, res) {
+  getReviewsHandler: function(req, res) {
+    const id = req.body.id;
 
-    model.get(err, results, fields) {
+    model.getReviews(id, (err, results, fields) => {
       if (err) {
         res.status(400).send(err);
       } else {
         res.status(200).send(results);
       }
-    }
-  }
+    })
+  },
 
-  postHandler() {
+  getReviewsMetaHandler: function(req, res) {
 
-  }
+  },
 
-  putHandler() {
+  postReviewsHandler: function(req, res) {
 
-  }
+  },
+
+  putHelpfulHandler: function(req, res) {
+
+  },
+
+  putReportHandler: function(req, res) {
+
+  },
+
 }
