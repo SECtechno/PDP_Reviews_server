@@ -65,12 +65,24 @@ CREATE TABLE reviews_photos (
   PRIMARY KEY (ID)
 );
 
+-- SET FOREIGN_KEY_CHECKS=0;
+
 -- ALTER TABLE reviews ADD FOREIGN KEY (product_id) REFERENCES products (id);
 -- ALTER TABLE reviews_photos ADD FOREIGN KEY (review_id) REFERENCES reviews (id);
 -- ALTER TABLE characteristics ADD FOREIGN KEY (product_id) REFERENCES products (id);
-ALTER TABLE `characteristic_reviews`
-ADD FOREIGN KEY (`characteristic_id`) REFERENCES `characteristics` (`id`);
-ALTER TABLE characteristic_reviews ADD FOREIGN KEY (review_id) REFERENCES reviews (id);
+-- ALTER TABLE `reviews_db`.`characteristic_reviews`
+-- ADD CONSTRAINT `review_id`
+--   FOREIGN KEY (`review_id`)
+--   REFERENCES `reviews_db`.`reviews` (`id`)
+--   ON DELETE NO ACTION
+--   ON UPDATE NO ACTION;
+
+-- ALTER TABLE `reviews_db`.`characteristic_reviews`
+-- ADD CONSTRAINT `review_id`
+--   FOREIGN KEY (`review_id`)
+--   REFERENCES `reviews_db`.`reviews` (`id`)
+--   ON DELETE NO ACTION
+--   ON UPDATE NO ACTION;
 
 /*
 LOAD DATA LOCAL INFILE "./rawdata/reviews.csv" INTO TABLE reviews
