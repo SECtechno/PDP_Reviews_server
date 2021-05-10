@@ -39,7 +39,7 @@ module.exports = {
   },
 
   putReport: function (params, callback) {
-    var queryStr = 'SELECT * FROM `reviews` WHERE `id` = "1"';
+    var queryStr = 'INSERT INTO reviews (?, ?) VALUES (?, ?)';
 
     db.query(queryStr, params, function (error, results, fields) {
       if (error) {
