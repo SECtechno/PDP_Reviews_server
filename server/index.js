@@ -17,6 +17,8 @@ app.post('/reviws', controller.postReviewsHandler);
 app.put('/reviws/:review_id/helpful', controller.putHelpfulHandler);
 app.put('/reviws/:review_id/report', controller.putReportHandler);
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
-})
+// app.listen(port, () => {
+//   console.log(`Example app listening at http://localhost:${port}`)
+// })
+
+module.exports = app;
