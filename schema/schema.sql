@@ -4,73 +4,85 @@ CREATE DATABASE reviews_db;
 
 USE reviews_db;
 
+
 DROP TABLE IF EXISTS products;
 
 CREATE TABLE products (
-  id int NOT NULL AUTO_INCREMENT,
-  recommend int NOT NULL,
-  not_recommend int NOT NULL,
-  rating_1 int NOT NULL,
-  rating_2 int NOT NULL,
-  rating_3 int NOT NULL,
-  rating_4 int NOT NULL,
-  rating_5 int NOT NULL,
+  id INT NOT NULL AUTO_INCREMENT,
+  recommend INT,
+  not_recommend INT,
+  rating_1 INT,
+  rating_2 INT,
+  rating_3 INT,
+  rating_4 INT,
+  rating_5 INT,
   PRIMARY KEY (ID)
 );
 
 DROP TABLE IF EXISTS reviews;
 
 CREATE TABLE reviews (
-  id int NOT NULL AUTO_INCREMENT,
-  product_id int(10) NOT NULL,
-  rating int NOT NULL,
-  date timestamp NOT NULL,
-  summary varchar(60) NOT NULL,
-  body varchar(200) NOT NULL,
-  recommend tinyint NOT NULL,
-  reported tinyint NOT NULL,
-  reviewer_name varchar(20) NOT NULL,
-  reviewer_email varchar(20) NOT NULL,
-  response varchar(20) NOT NULL,
-  helpfulness int NOT NULL,
+  id INT,
+  product_id INT,
+  rating INT,
+  date DATETIME,
+  summary TEXT,
+  body TEXT,
+  recommend BOOLEAN,
+  reported BOOLEAN,
+  reviewer_name VARCHAR(50),
+  reviewer_email VARCHAR(50),
+  response VARCHAR(250),
+  helpfulness INT,
   PRIMARY KEY (ID)
 );
-
--- insert into reviews(rating, summary) values (4, 'This product was ok!');
 
 DROP TABLE IF EXISTS characteristics;
 
 CREATE TABLE characteristics (
-  id int NOT NULL AUTO_INCREMENT,
-  product_id int NOT NULL,
-  name varchar(20) NOT NULL,
+  id INT,
+  product_id INT,
+  name VARCHAR(20),
   PRIMARY KEY (ID)
 );
 
-DROP TABLE IF EXISTS characteristics_reviews;
+DROP TABLE IF EXISTS characteristic_reviews;
 
-CREATE TABLE characteristics_reviews (
-  id int NOT NULL AUTO_INCREMENT,
-  characteristic_id int NOT NULL,
-  review_id int NOT NULL,
-  value int NOT NULL,
+CREATE TABLE characteristic_reviews (
+  id INT,
+  characteristic_id INT,
+  review_id INT,
+  value INT,
   PRIMARY KEY (ID)
 );
 
 DROP TABLE IF EXISTS reviews_photos;
 
 CREATE TABLE reviews_photos (
-  id int NOT NULL,
-  review_id int NOT NULL,
-  url varchar(250) NOT NULL,
+  id INT,
+  review_id INT,
+  url varchar(250),
   PRIMARY KEY (ID)
 );
+
+-- SET FOREIGN_KEY_CHECKS=0;
 
 -- ALTER TABLE reviews ADD FOREIGN KEY (product_id) REFERENCES products (id);
 -- ALTER TABLE reviews_photos ADD FOREIGN KEY (review_id) REFERENCES reviews (id);
 -- ALTER TABLE characteristics ADD FOREIGN KEY (product_id) REFERENCES products (id);
--- ALTER TABLE characteristic_reviews ADD FOREIGN KEY (characteristic_id) REFERENCES characteristics(id);
--- ALTER TABLE characteristic_reviews ADD FOREIGN KEY (review_id) REFERENCES reviews (id);
+-- ALTER TABLE `reviews_db`.`characteristic_reviews`
+-- ADD CONSTRAINT `review_id`
+--   FOREIGN KEY (`review_id`)
+--   REFERENCES `reviews_db`.`reviews` (`id`)
+--   ON DELETE NO ACTION
+--   ON UPDATE NO ACTION;
+
+-- ALTER TABLE `reviews_db`.`characteristic_reviews`
+-- ADD CONSTRAINT `review_id`
+--   FOREIGN KEY (`review_id`)
+--   REFERENCES `reviews_db`.`reviews` (`id`)
+--   ON DELETE NO ACTION
+--   ON UPDATE NO ACTION;
 
 /*
 LOAD DATA LOCAL INFILE "./rawdata/reviews.csv" INTO TABLE reviews
