@@ -8,8 +8,8 @@ export let options = {
 export default function () {
   let url = 'http://localhost:8080/reviews';
   let payload = JSON.stringify({
-    id: 1,
-    product_id: 1,
+    id: 12,
+    product_id: 3,
     rating: 5,
     date: null,
     summary: 'This product was great',

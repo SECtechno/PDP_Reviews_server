@@ -6,9 +6,13 @@ export let options = {
 }
 
 export default function () {
-  let res = http.get('http://localhost:8080/reviews/meta');
+  var params = {
+    id: 1,
+  }
+
+  let res = http.get('http://localhost:8080/reviews/meta?product_id=1');
   check(res, { 'status was 200': (r) => r.status == 200 });
   sleep(1);
 }
 
-// k6 run ./test_load/script_get.js
+// k6 run ./test_load/script_getMeta.js
