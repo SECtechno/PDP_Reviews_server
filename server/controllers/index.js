@@ -4,7 +4,7 @@ module.exports = {
 
   getReviewsHandler: function(req, res) {
     // const id = req.body.id;
-    // console.log(req.params.id, req.body.id);
+    console.log(req.params.page, req.params.count, req.params.sort, req.params.product_id);
 
     model.getReviews((err, data) => {
       if (err) {

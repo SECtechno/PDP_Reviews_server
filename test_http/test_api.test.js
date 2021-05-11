@@ -1,35 +1,15 @@
-// const app = require('../server');
-// const mysql = require('mysql');
-// const supertest = require('supertest');
+const app = require('../server');
+const supertest = require('supertest');
+const request = supertest(app);
 
-// beforeEach((done) => {
-//   var connection = mysql.createConnection({
-//     host     : 'localhost',
-//     user     : 'root',
-//     password : 'password',
-//     database : 'jestdb'
-//   });
-//   connection.connect();
-//   () => done();
-// });
-
-// afterEach((done) => {
-//   mysql.connection.end();
-//   () => done();
-// });
-
-// // This passes because 1 === 1
-// it('Testing to see if Jest works', () => {
-//   expect(1).toBe(1)
-// })
-
-xtest('GET /api/reviews', async () => {
-
-  await supertest(app).get('/api/reviews')
-    .expect(200)
-    .then((response) => {
-      // check type and length
-
-      // check data
-    })
+app.get('./reviews', async (req, res) => {
+  res.jason();
 })
+
+it('Gets the test endpoint', async done => {
+  const response = await request.get('/reviews')
+
+  expect(response.status).toBe(200)
+  done();
+})
+
