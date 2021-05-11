@@ -41,8 +41,9 @@ module.exports = {
   },
 
   putHelpfulHandler: function(req, res) {
+    const params = [req.body.helpfulness, req.params.review_id];
 
-    model.putHelpful((err, data) => {
+    model.putHelpful(params, (err, data) => {
       console.log(data);
 
       if (err) {
@@ -54,6 +55,7 @@ module.exports = {
   },
 
   putReportHandler: function(req, res) {
+    const params = [req.params.review_id];
 
     model.putReport((err, data) => {
       console.log(data);

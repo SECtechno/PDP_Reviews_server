@@ -26,7 +26,7 @@ module.exports = {
     });
   },
 
-  getReviewsMeta: function (callback) {
+  getReviewsMeta: function (params, callback) {
     var queryStr = `SELECT * FROM reviews WHERE product_id=1`;
 
     db.query(queryStr, function (error, data) {
@@ -39,7 +39,7 @@ module.exports = {
   },
 
   putHelpful: function (params, callback) {
-    var queryStr =  'UPDATE reviews SET helpfulness = helpfulness + 1';
+    var queryStr =  `UPDATE reviews SET helpfulness=${params[0]} WHERE id=${params[1]}`;
 
     db.query(queryStr, params, function (error, data) {
       if (error) {
@@ -51,7 +51,7 @@ module.exports = {
   },
 
   putReport: function (params, callback) {
-    var queryStr = 'UPDATE reviews SET reported = 1';
+    var queryStr = `UPDATE reviews SET reported=1 WHERE id=${params[0]}`;
 
     db.query(queryStr, params, function (error, data) {
       if (error) {
