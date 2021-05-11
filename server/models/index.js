@@ -2,8 +2,10 @@ const db = require('../../database/index.js');
 
 module.exports = {
 
-  getReviews: function (callback) {
-    var queryStr = `SELECT * FROM reviews LIMIT 5,10`;
+  getReviews: function (params, callback) {
+    const { page, count, sort, product_id } = params;
+
+    var queryStr = `SELECT * FROM reviews LIMIT 5,${count}`;
 
     db.query(queryStr, function (error, data) {
       if (error) {
@@ -26,8 +28,24 @@ module.exports = {
     });
   },
 
-  getReviewsMeta: function (callback) {
-    var queryStr = `SELECT * FROM reviews WHERE product_id=1`;
+  getRatingRecommend: function (params, callback) {
+    const { product_id } = params;
+
+    var queryStr = `SELECT * FROM reviews WHERE product_id=${product_id}`;
+
+    db.query(queryStr, function (error, data) {
+      if (error) {
+        throw error
+      } else {
+        callback(null, data);
+      }
+    });
+  },
+
+  getCharacteristics: function (params, callback) {
+    const { product_id } = params;
+
+    var queryStr = `SELECT characteristics.name characteristics, characteristics_reviews.value FROM characteristics INNER JOIN characteristics_reviews ON characteristics.id=characteristics_reviews.characteristic_id`;
 
     db.query(queryStr, function (error, data) {
       if (error) {
@@ -39,7 +57,7 @@ module.exports = {
   },
 
   putHelpful: function (params, callback) {
-    var queryStr =  'UPDATE reviews SET helpfulness = helpfulness + 1';
+    var queryStr =  `UPDATE reviews SET helpfulness=${params[0]} WHERE id=${params[1]}`;
 
     db.query(queryStr, params, function (error, data) {
       if (error) {
@@ -51,7 +69,7 @@ module.exports = {
   },
 
   putReport: function (params, callback) {
-    var queryStr = 'UPDATE reviews SET reported = 1';
+    var queryStr = `UPDATE reviews SET reported=1 WHERE id=${params[0]}`;
 
     db.query(queryStr, params, function (error, data) {
       if (error) {

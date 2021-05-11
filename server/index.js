@@ -13,8 +13,8 @@ app.get('/', (req, res) => {
 });
 
 app.get('/reviews', controller.getReviewsHandler);
-app.get('/reviews/meta', controller.getReviewsMetaHandler);
 app.post('/reviews', controller.postReviewsHandler);
+app.get('/reviews/meta', controller.getReviewsMetaHandler);
 app.put('/reviews/:review_id/helpful', controller.putHelpfulHandler);
 app.put('/reviews/:review_id/report', controller.putReportHandler);
 

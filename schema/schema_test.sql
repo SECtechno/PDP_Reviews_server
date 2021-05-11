@@ -1,67 +1,67 @@
-DROP DATABASE IF EXISTS reviews_st;
+DROP DATABASE IF EXISTS reviews_ts;
 
-CREATE DATABASE reviews_st;
+CREATE DATABASE reviews_ts;
 
-USE reviews_st;
+USE reviews_ts;
 
 
 DROP TABLE IF EXISTS products;
 
 CREATE TABLE products (
-  id int NOT NULL AUTO_INCREMENT,
-  recommend int NOT NULL,
-  not_recommend int NOT NULL,
-  rating_1 int NOT NULL,
-  rating_2 int NOT NULL,
-  rating_3 int NOT NULL,
-  rating_4 int NOT NULL,
-  rating_5 int NOT NULL,
+  id INT NOT NULL AUTO_INCREMENT,
+  recommend INT,
+  not_recommend INT,
+  rating_1 INT,
+  rating_2 INT,
+  rating_3 INT,
+  rating_4 INT,
+  rating_5 INT,
   PRIMARY KEY (ID)
 );
 
 DROP TABLE IF EXISTS reviews;
 
 CREATE TABLE reviews (
-  id int NOT NULL AUTO_INCREMENT,
-  product_id int(10) NOT NULL,
-  rating int(20) NOT NULL,
-  date varchar(60) NOT NULL,
-  summary varchar(200) NOT NULL,
-  body varchar(500) NOT NULL,
-  recommend tinyint NOT NULL,
-  reported tinyint NOT NULL,
-  reviewer_name varchar(100) NOT NULL,
-  reviewer_email varchar(100) NOT NULL,
-  response varchar(100) NOT NULL,
-  helpfulness int NOT NULL,
+  id INT,
+  product_id INT,
+  rating INT,
+  date DATETIME,
+  summary TEXT,
+  body TEXT,
+  recommend BOOLEAN,
+  reported BOOLEAN,
+  reviewer_name VARCHAR(50),
+  reviewer_email VARCHAR(50),
+  response VARCHAR(250),
+  helpfulness INT,
   PRIMARY KEY (ID)
 );
 
 DROP TABLE IF EXISTS characteristics;
 
 CREATE TABLE characteristics (
-  id int NOT NULL AUTO_INCREMENT,
-  product_id int NOT NULL,
-  name varchar(20) NOT NULL,
+  id INT,
+  product_id INT,
+  name VARCHAR(20),
   PRIMARY KEY (ID)
 );
 
-DROP TABLE IF EXISTS characteristic_reviews;
+DROP TABLE IF EXISTS characteristics_reviews;
 
-CREATE TABLE characteristic_reviews (
-  id int NOT NULL AUTO_INCREMENT,
-  characteristic_id int NOT NULL,
-  review_id int NOT NULL,
-  value int NOT NULL,
+CREATE TABLE characteristics_reviews (
+  id INT,
+  characteristic_id INT,
+  review_id INT,
+  value INT,
   PRIMARY KEY (ID)
 );
 
 DROP TABLE IF EXISTS reviews_photos;
 
 CREATE TABLE reviews_photos (
-  id int NOT NULL,
-  review_id int NOT NULL,
-  url varchar(250) NOT NULL,
+  id INT,
+  review_id INT,
+  url varchar(250),
   PRIMARY KEY (ID)
 );
 
@@ -82,6 +82,10 @@ select rating from reviews;
 select summary from reviews;
 select body from reviews;
 *****select reported from reviews;
+
+LOAD DATA LOCAL INFILE "./rawdata/test_reviews.csv" INTO TABLE reviews
+FIELDS TERMINATED BY ','
+IGNORE 1 ROWS;
 
 LOAD DATA LOCAL INFILE "./rawdata/test_characteristics.csv" INTO TABLE characteristics
 FIELDS TERMINATED BY ','
