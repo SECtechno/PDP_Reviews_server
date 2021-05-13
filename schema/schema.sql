@@ -89,6 +89,10 @@ LOAD DATA LOCAL INFILE "./rawdata/reviews.csv" INTO TABLE reviews
 FIELDS TERMINATED BY ','
 IGNORE 1 ROWS;
 
+LOAD DATA LOCAL INFILE "./reviews_photos_E.csv" INTO TABLE reviews_photos
+FIELDS TERMINATED BY ','
+IGNORE 1 ROWS;
+
 
 EXECUTE.sql file: mysql -u root -p < ./schema/schema.sql
 ACCESS MySQL CLI: mysql -u root -p
