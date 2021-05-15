@@ -1,4 +1,4 @@
-# Reviews-server
+# reviews_server
 This is the backend server of reviews module for the product-detail-page project.
 
 ## API Capabilities
