@@ -15,3 +15,5 @@ In order to laungh the page the following commands must be run after the reposit
 
   - npm install
   - npm start
+
+## Scaling the Project
