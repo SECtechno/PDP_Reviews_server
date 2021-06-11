@@ -1,7 +1,7 @@
 # Reviews - API
 
 ## About
-Reviews API is the backend microservices of reviews module for a e-commerce website.
+Reviews API is the backend microservices of reviews module for our client's e-commerce website with the primary goal of improving the website's performance.
 
 ## Related Projects
 
@@ -17,14 +17,22 @@ Reviews API is the backend microservices of reviews module for a e-commerce webs
 - k6.io (development evironment stress testing)
 - loader.io (production/cloud environment stress testing)
 
-## Scaling the Project
-In order to carry more requst load, this service has been scaled horizantally with one load balancer, and three servers, along with one mysql database.
+## Requirements
+
+- Node 6.13.0
+- etc
+
+## Getting Started
+In order to laungh the page the following commands must be run after the repository has been cloned to your local system:
+
+  - npm install
+  - npm start
 
 ## API Documentation
 
 ### List Reviews
 
-**GET /reviews** Retrieves the list of reviews.
+- GET `/reviews`
 
 Parameters
 
@@ -63,20 +71,24 @@ Response
 
 ### Get Review Metadatas
 
+- GET `/reviews/meta`
+
 Response
 
 **Status: 200 OK**
 
-```json
+```javascript
 {
   "product_id": "2",
   "ratings": {
     2: 1,
     3: 1,
     4: 2,
+    // ...
   },
   "recommended": {
     0: 5
+    // ...
   },
   "characteristics": {
     "Size": {
@@ -91,16 +103,37 @@ Response
       "id": 16,
       "value": "4.0000"
     },
+    // ...
+	}
 }
 ```
 
-## Requirements
+### Add a Review
 
-- Node 6.13.0
-- etc
+- POST `/reviews`
 
-## Deploying the Project
-In order to laungh the page the following commands must be run after the repository has been cloned to your local system:
+**Body Parameters:**
 
-  - npm install
-  - npm start
+- `product_id` Required ID of the product to post the review for
+- `rating` Integer (1-5) indicating the review rating
+- `summary` Summary text of the review
+- `body` Continued or full text of the review
+- `recommend` Value indicating if the reviewer recommends the product
+- `name` Username for question asker
+- `email` Email address for question asker
+- `photos` Array of text urls that link to images to be shown
+- `characteristics` Object of keys representing characteristic_id and values representing the review value for that characteristic.
+
+**Status: 200 OK**
+
+### Mark Review as Helpful
+
+- PUT `/reviews/:review_id/helpful`
+
+**Status: 200 OK**
+
+### Report Review
+
+- PUT `/reviews/:review_id/report`
+
+**Status: 200 OK**
