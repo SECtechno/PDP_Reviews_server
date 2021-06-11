@@ -64,3 +64,7 @@ In order to laungh the page the following commands must be run after the reposit
 
   - npm install
   - npm start
+
+## Scaling the Project
+In order to carry more requst load, this service has been scaled horizantally with one load balancer, and three servers, along with one mysql database.
+
