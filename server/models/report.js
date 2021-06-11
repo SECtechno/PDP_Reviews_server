@@ -1,4 +1,4 @@
-const db = require('../../database/index.js');
+const db = require('../database/index.js');
 
 function putReport(params, callback) {
   var queryStr = `UPDATE reviews SET reported=1 WHERE id=${params[0]}`;

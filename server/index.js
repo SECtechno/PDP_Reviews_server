@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 
 const port = 8080
-const db = require('../database');
+const db = require('./database');
 const { reviews, reviewsMeta, helpful, report, loaderio } = require('./controllers');
 
 app.use(express.urlencoded({extended: true}));

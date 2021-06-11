@@ -1,4 +1,4 @@
-const db = require('../../database/index.js');
+const db = require('../database/index.js');
 
 function getReviews(params, callback) {
   const { id, page, count, sort, product_id } = params;
