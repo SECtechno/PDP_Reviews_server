@@ -1,19 +1,26 @@
 # Reviews - API
-This is a backend microservices of reviews module for a e-commerce website.
+
+## About
+Reviews API is the backend microservices of reviews module for a e-commerce website.
 
 ## Related Projects
 
   - https://github.com/SECtechno/products
   - https://github.com/SECtechno/q-a
 
-## API Capabilities
-The API Capabilities, including the options to:
+## Bulit with
+- [Node.js](https://nodejs.org/en/)
+- [Express](http://expressjs.com/)
+- [MySQL](https://www.mysql.com/)
+- [Nginx](https://www.nginx.com/)
+- Hosted on separated AWS EC2 instances
+- k6.io (development evironment stress testing)
+- loader.io (production/cloud environment stress testing)
 
-  - GET /reviews/
-  - GET /reviews/meta
-  - POST /reviews
-  - PUT /reviews/:review_id/helpful
-  - PUT /reviews/:review_id/report
+## Scaling the Project
+In order to carry more requst load, this service has been scaled horizantally with one load balancer, and three servers, along with one mysql database.
+
+## API Documentation
 
 ### List Reviews
 
@@ -54,6 +61,39 @@ Response
 ]
 ```
 
+### Get Review Metadatas
+
+Response
+
+**Status: 200 OK**
+
+```json
+{
+  "product_id": "2",
+  "ratings": {
+    2: 1,
+    3: 1,
+    4: 2,
+  },
+  "recommended": {
+    0: 5
+  },
+  "characteristics": {
+    "Size": {
+      "id": 14,
+      "value": "4.0000"
+    },
+    "Width": {
+      "id": 15,
+      "value": "3.5000"
+    },
+    "Comfort": {
+      "id": 16,
+      "value": "4.0000"
+    },
+}
+```
+
 ## Requirements
 
 - Node 6.13.0
@@ -64,7 +104,3 @@ In order to laungh the page the following commands must be run after the reposit
 
   - npm install
   - npm start
-
-## Scaling the Project
-In order to carry more requst load, this service has been scaled horizantally with one load balancer, and three servers, along with one mysql database.
-
