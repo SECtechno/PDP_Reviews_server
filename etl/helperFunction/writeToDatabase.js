@@ -1,8 +1,7 @@
-const db = require('../database/index.js');
+const db = require('../../server/database/index.js');
 
 const writeToDatabase = (data) => {
-  let query = "INSERT INTO characteristic_reviews (id,characteristic_id,review_id,value) VALUES ?";
-
+  let query = "INSERT INTO reviews (id,product_id,rating,date,summary,body,recommend,reported,reviewer_name,reviewer_email,response,helpfulness) VALUES ?";
 
   db.query(query, [data], (error, response) => {
     if (error) {
