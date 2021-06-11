@@ -1,0 +1,9 @@
+node-modules
+coverage
+etl
+helper
+rawdata
+test_http
+test_load
+xfunc
+.gitignore

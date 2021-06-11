@@ -3,9 +3,10 @@ const db = require('../../database/index.js');
 module.exports = {
 
   getReviews: function (params, callback) {
-    const { page, count, sort, product_id } = params;
+    const { id, page, count, sort, product_id } = params;
+    console.log(id);
 
-    var queryStr = `SELECT * FROM reviews LIMIT 5,${count}`;
+    var queryStr = `SELECT * FROM reviews WHERE id=${id}`;
 
     db.query(queryStr, function (error, data) {
       if (error) {
