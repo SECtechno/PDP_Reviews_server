@@ -1,11 +1,10 @@
 const csv = require('csv-parser');
 var mysql = require('mysql');
 const fs = require('fs');
-const writeToDB = require('../helper/writeToDatabase.js');
-const dv_reviews = require('../helper/dv_reviews.js');
-const dv_characteristics = require('../helper/dv_characteristics.js');
+const dv_reviews = require('./helperFunction/dv_reviews.js');
+const writeToDB = require('./helperFunction/writeToDatabase.js');
 
-const filename = ('./rawdata/characteristic_reviews_1.csv');
+const filename = ('../docs/rawdata/test_reviews.csv');
 let results = [];
 
 /*
@@ -28,7 +27,7 @@ fs.createReadStream(filename)
   .pipe(csv())
   .on('data', (data) => {
 
-    dv_characteristics(data, function() {
+    dv_reviews(data, function() {
       results.push(data);
       // console.log('begin: ', results);
 
